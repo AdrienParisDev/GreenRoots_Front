@@ -24,7 +24,7 @@ export async function getProductsPagination(
 ): Promise<PaginatedResponse<IProduct>> {
   try {
     const res = await fetch(
-      `${API_URL}/products/pagination/available?limit=${limit}&page=${page}`,
+      `${API_URL}/products/pagination/all?limit=${limit}&page=${page}`,
       {
         cache: "no-store",
       }

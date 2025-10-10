@@ -16,7 +16,7 @@
 
 @utility custom-btn-hover {
   @apply transition-transform duration-300 ease-in-out
-         hover:scale-110 hover:cursor-pointer;
+         hover:scale-102 hover:cursor-pointer;
 }
 @utility custom-card-hover {
   @apply transition-transform duration-300 ease-in-out

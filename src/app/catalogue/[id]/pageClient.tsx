@@ -35,7 +35,7 @@ const PageClient = ({ product }: { product: IProduct | null }) => {
         {/* Image produit */}
         <article className="rounded-xl shadow  md:w-1/2">
           <div className="relative w-full h-[500px] md:h-[700px]">
-            {product.image_urls && product.image_urls.length > 0 ? (
+            {product.image_paths && product.image_paths.length > 0 ? (
               <ProductGallery product={product} />
             ) : (
               <div className="w-full h-full flex items-center justify-center bg-gray-100 rounded-lg">

@@ -13,7 +13,7 @@ interface IGalleryProps {
 const ProductGallery = ({ product }: IGalleryProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const images = product.image_urls;
+  const images = product.image_paths;
 
   const total = images.length;
 

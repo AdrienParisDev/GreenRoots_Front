@@ -2,8 +2,9 @@ export interface IProduct {
   available: boolean;
   carbon: string;
   description?: string;
+  best_seller: boolean;
   id: number;
-  image_urls: string[];
+  image_paths: string[];
   name: string;
   price: string;
   productLocations: IProductLocation[];

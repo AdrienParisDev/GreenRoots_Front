@@ -1,4 +1,5 @@
-import CardItem from "@/components/Sections/CardItem";
+// import CardItem from "@/components/Sections/CardItem";
+import Card from "@/components/Commun/Cards/product"
 import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
 import { getProductsPagination } from "@/services/product.api";
 import Link from "next/link";
@@ -17,7 +18,7 @@ const CataloguePage = async ({ searchParams }: CataloguePageProps) => {
   );
   const products = productsWithPagination.data;
   const { totalPages } = productsWithPagination.pagination_State;
-
+console.log(products)
   return (
     <main className="min-h-screen mt-16 px-4 custom-size-minmax">
       {/* section titre */}
@@ -40,19 +41,34 @@ const CataloguePage = async ({ searchParams }: CataloguePageProps) => {
           <section className="py-8">
             <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 bg-white items-stretch">
               {products.map((product) => (
-                <CardItem
-                  key={product.id}
-                  avalaible={product.available}
-                  name={product.name}
-                  price={product.price}
-                  image_urls={product.image_urls}
-                  scientific_name={product.scientific_name}
-                  carbon={product.carbon}
-                  description={product.description}
-                  slug={product.slug}
-                  id={product.id}
-                  variant="detailed"
-                />
+                // <CardItem
+                //   key={product.id}
+                //   avalaible={product.available}
+                //   name={product.name}
+                //   price={product.price}
+                //   image_urls={product.image_paths}
+                //   scientific_name={product.scientific_name}
+                //   carbon={product.carbon}
+                //   description={product.description}
+                //   slug={product.slug}
+                //   id={product.id}
+                //   variant="detailed"
+                // />
+                  <Card
+                key={product.id}
+                avalaible={product.available}
+                best_seller={product.best_seller}
+                description={product.description}
+                slug={product.slug}
+                stock={product.stock}
+                id={product.id}
+                name={product.name}
+                price={product.price}
+                carbon={product.carbon}
+                scientific_name={product.scientific_name}
+                image_paths={product.image_paths}
+                variant={"simple"}
+              />
               ))}
             </ul>
 

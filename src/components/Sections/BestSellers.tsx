@@ -1,4 +1,5 @@
-import CardItem from "./CardItem";
+// import CardItem from "./CardItem";
+import Card from "../Commun/Cards/product"
 import { getProductsPagination } from "@/services/product.api";
 
 const BestSellers = async () => {
@@ -17,7 +18,7 @@ const BestSellers = async () => {
       </div>
 
       {/* partie des cards  */}
-      <div className="px-4 ">
+      {/* <div className="px-4 ">
         {products.length === 0 ? (
           <p className="text-white text-center opacity-70">
             Les best sellers ne sont pas disponibles pour le moment.
@@ -34,11 +35,38 @@ const BestSellers = async () => {
                 price={el.price}
                 carbon={el.carbon}
                 scientific_name={el.scientific_name}
-                image_urls={el.image_urls}
+                image_urls={el.image_paths}
                 variant={"simple"}
               />
             ))}
           </ul>
+        )}
+      </div> */}
+
+      <div className="px-4 ">
+        {products.length === 0 ? (
+          <p className="text-white text-center opacity-70">
+            Les best sellers ne sont pas disponibles pour le moment.
+          </p>
+        ) : (
+          <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-8">
+            {productsWithPagination.data.slice(0, 3).map((el) => (
+              <Card
+                key={el.id}
+                avalaible={el.available}
+                best_seller={el.best_seller}
+                description={el.description}
+                slug={el.slug}
+                id={el.id}
+                name={el.name}
+                price={el.price}
+                carbon={el.carbon}
+                scientific_name={el.scientific_name}
+                image_paths={el.image_paths}
+                variant={"simple"}
+              />
+            ))}
+          </div>
         )}
       </div>
     </div>
