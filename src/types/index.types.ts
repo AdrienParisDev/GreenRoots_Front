@@ -42,3 +42,15 @@ export interface IProductLocation {
   updated_at: string;
   product: IProduct;
 }
+
+export interface IUser {
+  id: number;
+  firstname: string;
+  lastname: string;
+  email: string;
+  password: string;
+  role: string;
+  entity_name: string;
+  created_at: string;
+  updated_at: string;
+}
