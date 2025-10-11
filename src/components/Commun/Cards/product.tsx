@@ -7,7 +7,7 @@ import { HiInformationCircle } from "react-icons/hi";
 
 
 // Reste à faire : 
-// utiliser interface Iproduct au lieu de cardprops sauf si utilisation de variante au final ou ça sera a gérer
+// voir si amélioration de cardprops en fonctions des besoins
 // ajouter des infos quand on survole i 
 // Voir si je peux ajouter des boutons différents (voir / edit) si utilisation de la card côté admin 
 // Ajouter le style de bouton à découvrir

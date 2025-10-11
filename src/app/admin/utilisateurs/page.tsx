@@ -7,7 +7,7 @@ import { getUsersPagination } from "@/services/user.api";
 import Link from "next/link";
 import { FaRegEye } from "react-icons/fa";
 import { IUser } from "@/types/index.types";
-import { FaChevronLeft } from "react-icons/fa";
+import SecondaryNav from "@/components/Administrateur/nav/SecondaryNav";
 
 interface CataloguePageProps {
     searchParams: Promise<{ page?: string }>;
@@ -44,18 +44,7 @@ const Page = ({ searchParams }: CataloguePageProps) => {
 
     return (
         <main className="min-h-screen mt-16 px-4 custom-size-minmax ">
-            <nav
-                aria-label="breadcrumb"
-                className="mb-6 flex items-center text-sm text-gray-600"
-            >
-                <Link href="/admin" className="flex items-center gap-1 hover:underline">
-                    <FaChevronLeft /> Admin
-                </Link>
-                <span className="mx-2">/</span>
-                <span aria-current="page" className="font-medium text-green-700">
-                    Utilisateurs
-                </span>
-            </nav>
+            <SecondaryNav />
             <h1 className="font-extrabold text-brand-green text-4xl text-center mb-6">
                 Vue d&apos;ensemble des Utilisateurs
             </h1>

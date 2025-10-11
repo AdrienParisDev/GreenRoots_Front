@@ -4,8 +4,7 @@ import { getOneUser } from "@/services/user.api";
 import { IUser } from "@/types/index.types";
 import { useParams } from "next/navigation";
 import { useState, useEffect } from "react";
-import Link from "next/link";
-import { FaChevronLeft } from "react-icons/fa";
+import SecondaryNav from "@/components/Administrateur/nav/SecondaryNav";
 
 const Page = () => {
     const { id } = useParams();
@@ -77,25 +76,7 @@ const Page = () => {
     // --- 🧱 Rendu ---
     return (
         <main className="min-h-screen mt-16 px-4 custom-size-minmax">
-            <nav
-                aria-label="breadcrumb"
-                className="mb-6 flex items-center text-sm text-gray-600"
-            >
-                <Link href="/admin" className="flex items-center gap-1 hover:underline">
-                    <FaChevronLeft /> Admin
-                </Link>
-                <span className="mx-2">/</span>
-                <Link
-                    href="/admin/utilisateurs"
-                    className="flex items-center gap-1 hover:underline"
-                >
-                    Utilisateurs
-                </Link>
-                <span className="mx-2">/</span>
-                <span aria-current="page" className="font-medium text-green-700">
-                    Profil
-                </span>
-            </nav>
+            <SecondaryNav currentLabel="Voir un utilisateur" />
 
             <section>
                 <h1>
