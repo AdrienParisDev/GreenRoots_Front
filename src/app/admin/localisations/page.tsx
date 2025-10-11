@@ -1,17 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import { FaRegEye, FaChevronLeft } from "react-icons/fa";
-import { FiEdit3 } from "react-icons/fi";
 import { MdDeleteOutline, MdOutlineCreate } from "react-icons/md";
 import { LuListFilter } from "react-icons/lu";
 import { PiTreeFill, PiMagnifyingGlassBold } from "react-icons/pi";
 import { TbMapOff, TbChristmasTreeOff, TbMapPin2 } from "react-icons/tb";
-import Link from "next/link";
 import { useLocations } from "@/hook/useLocations";
 import { deleteLocation, deleteProductLocationLink, getAllLocationsWithRelations } from "@/services/location.api";
 import { ILocation } from "@/types/index.types"
 import SecondaryNav from "@/components/Administrateur/nav/SecondaryNav";
+import AddButton from "@/components/Administrateur/button/Add";
+import ActionSeeButton from "@/components/Administrateur/button/ActionSee";
+import ActionUpdateButton from "@/components/Administrateur/button/ActionUpdate";
+import ActionDeleteButton from "@/components/Administrateur/button/ActionDelete";
+import ConfirmDeleteModal from "@/components/Administrateur/modal/ConfirmDelete";
 
 const Page = () => {
     const { locations, pagination, loading, fetchData } = useLocations(10);
@@ -60,6 +62,7 @@ const Page = () => {
     return (
         <main className="min-h-screen mt-16 px-4 custom-size-minmax">
             <SecondaryNav />
+
             <section>
 
                 <h1 className="font-extrabold text-brand-green text-4xl text-center mb-6">Vue d'ensemble des Localisations</h1>
@@ -132,10 +135,7 @@ const Page = () => {
                             <PiMagnifyingGlassBold />
                         </button>
                     </div>
-                    <Link href={"/admin/localisations/creation"} className="flex items-center px-8 border border border-brand-darkgreen shadow-lg p-2 rounded-lg text-brand-darkgreen hover:bg-brand-lightgreen hover:border-brand-white hover:text-brand-white">
-                        <MdOutlineCreate className="mr-4" />
-                        <p>Ajouter une localisation</p>
-                    </Link>
+                    < AddButton currentLabel="Ajouter une localisation" currentPieceOfURL="localisations/creation" />
                 </div>
 
                 {successMessage && (
@@ -190,18 +190,9 @@ const Page = () => {
                                     <td className="border border-brand-darkgreen text-center">NC</td>
                                     <td className="border border-brand-darkgreen">
                                         <div className="flex justify-center items-center gap-4">
-                                            <Link href={`/admin/localisations/${loc.id}`} className="border border-brand-darkgreen shadow-lg p-2 rounded-lg text-brand-darkgreen hover:bg-brand-lightgreen hover:border-brand-white hover:text-brand-white">
-                                                <FaRegEye />
-                                            </Link>
-                                            <Link href={`/admin/localisations/modifier/${loc.id}`} className="border border-brand-darkgreen shadow-lg p-2 rounded-lg text-brand-darkgreen hover:bg-brand-lightgreen hover:border-brand-white hover:text-brand-white">
-                                                <FiEdit3 />
-                                            </Link>
-                                            <button
-                                                onClick={() => handleDeleteClick(loc)}
-                                                className="border border-red-800 shadow-lg p-2 rounded-lg text-red-800 hover:bg-red-800 hover:border-brand-white hover:text-brand-white"
-                                            >
-                                                <MdDeleteOutline />
-                                            </button>
+                                            < ActionSeeButton currentPieceOfURL="localisations" currentDynamicURL={`${loc.id}`} />
+                                            < ActionUpdateButton currentPieceOfURL="localisations/modifier" currentDynamicURL={`${loc.id}`} />
+                                            < ActionDeleteButton openModalFunction={() => handleDeleteClick(loc)} />
                                         </div>
                                     </td>
                                 </tr>
@@ -259,30 +250,15 @@ const Page = () => {
             </section>
 
             {/* MODALE */}
-            {showModal && selectedLocation && (
-                <div className="fixed inset-0 flex items-center justify-center bg-brand-darkgreen/50 z-50">
-                    <div className="bg-white p-6 rounded-lg shadow-lg w-80 text-center">
-                        <h2 className="text-xl font-bold mb-4">Confirmer la suppression</h2>
-                        <p className="mb-4">
-                            Êtes-vous sûr de vouloir supprimer la localisation "<strong>{selectedLocation.name}</strong>" ?
-                        </p>
-                        <div className="flex justify-center gap-4">
-                            <button
-                                onClick={confirmDelete}
-                                className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
-                            >
-                                Supprimer
-                            </button>
-                            <button
-                                onClick={() => setShowModal(false)}
-                                className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400"
-                            >
-                                Annuler
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
+            <ConfirmDeleteModal
+                isOpen={showModal}
+                title="Confirmer la suppression"
+                message="Êtes-vous sûr de vouloir supprimer la localisation"
+                itemName={selectedLocation?.name}
+                onConfirm={confirmDelete}
+                onCancel={() => setShowModal(false)}
+            />
+            
         </main>
     );
 };
