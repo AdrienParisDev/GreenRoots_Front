@@ -11,6 +11,7 @@ import Link from "next/link";
 import { useLocations } from "@/hook/useLocations";
 import { deleteLocation, deleteProductLocationLink, getAllLocationsWithRelations } from "@/services/location.api";
 import { ILocation } from "@/types/index.types"
+import SecondaryNav from "@/components/Administrateur/nav/SecondaryNav";
 
 const Page = () => {
     const { locations, pagination, loading, fetchData } = useLocations(10);
@@ -58,18 +59,7 @@ const Page = () => {
 
     return (
         <main className="min-h-screen mt-16 px-4 custom-size-minmax">
-            <nav
-                aria-label="breadcrumb"
-                className="mb-6 flex items-center text-sm text-gray-600"
-            >
-                <Link href="/admin" className="flex items-center gap-1 hover:underline">
-                    <FaChevronLeft /> Admin
-                </Link>
-                <span className="mx-2">/</span>
-                <span aria-current="page" className="font-medium text-green-700">
-                    Localisations
-                </span>
-            </nav>
+            <SecondaryNav />
             <section>
 
                 <h1 className="font-extrabold text-brand-green text-4xl text-center mb-6">Vue d'ensemble des Localisations</h1>

@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { FaChevronLeft } from "react-icons/fa";
+import SecondaryNav from "@/components/Administrateur/nav/SecondaryNav";
 
 const Page = () => {
     const { id } = useParams();
@@ -46,22 +47,7 @@ const Page = () => {
 
     return (
         <main className="max-w-6xl mx-auto px-6 py-10">
-            <nav
-                aria-label="breadcrumb"
-                className="mb-6 flex items-center text-sm text-gray-600"
-            >
-                <Link href="/admin" className="flex items-center gap-1 hover:underline">
-                    <FaChevronLeft /> Admin
-                </Link>
-                <span className="mx-2">/</span>
-                <Link href="/admin/localisations" className="hover:underline">
-                    Localisations
-                </Link>
-                <span className="mx-2">/</span>
-                <span aria-current="page" className="font-medium text-green-700">
-                    Voir une localisation
-                </span>
-            </nav>
+            <SecondaryNav currentLabel="Voir une localisation" />
             <h1 className="text-3xl font-bold mb-4">{location.name}</h1>
 
             {/* Carte (ex. Leaflet ou Mapbox plus tard) */}
@@ -81,7 +67,7 @@ const Page = () => {
                         >
                             <div className="relative w-full h-48 mb-3">
                                 <Image
-                                    src={`http://localhost:4000/${product.image_urls[0]}`}
+                                    src={`http://localhost:4000/${product.image_paths[0]}`}
                                     alt={product.name}
                                     fill
                                     className="w-full h-full object-cover rounded-t-lg"

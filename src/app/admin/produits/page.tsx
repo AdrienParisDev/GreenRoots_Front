@@ -9,6 +9,7 @@ import { FaRegEye } from "react-icons/fa";
 import { FiEdit3 } from "react-icons/fi";
 import DeleteButton from "@/components/admin/DeleteButton";
 import { IProduct } from "@/types/index.types";
+import SecondaryNav from "@/components/Administrateur/nav/SecondaryNav";
 
 interface CataloguePageProps {
   searchParams: Promise<{ page?: string }>;
@@ -45,6 +46,7 @@ const Page = ({ searchParams }: CataloguePageProps) => {
 
   return (
     <main className="min-h-screen mt-16 px-4 custom-size-minmax ">
+      <SecondaryNav />
       <h1 className="font-extrabold text-brand-green text-4xl text-center mb-6">
         Vue d&apos;ensemble des produits
       </h1>
