@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { MdDeleteOutline, MdOutlineCreate } from "react-icons/md";
 import { LuListFilter } from "react-icons/lu";
 import { PiTreeFill, PiMagnifyingGlassBold } from "react-icons/pi";
 import { TbMapOff, TbChristmasTreeOff, TbMapPin2 } from "react-icons/tb";
@@ -14,8 +13,38 @@ import ActionSeeButton from "@/components/Administrateur/button/ActionSee";
 import ActionUpdateButton from "@/components/Administrateur/button/ActionUpdate";
 import ActionDeleteButton from "@/components/Administrateur/button/ActionDelete";
 import ConfirmDeleteModal from "@/components/Administrateur/modal/ConfirmDelete";
+import GlobalViewBoard, { KPIData } from "@/components/Administrateur/board/GlobalView"
 
 const Page = () => {
+
+    // Informations pour hydrater le tableau de KPI
+    const kpis: KPIData[] = [
+        {
+            value: 42,
+            title: "Total des lieux de plantation",
+            icon: <PiTreeFill className="text-xl md:text-2xl text-brand-white" />,
+            variant: "star",
+        },
+        {
+            value: 38,
+            title: "Arbres ayant une zone de plantation",
+            icon: <TbMapPin2 className="text-xl md:text-2xl text-brand-lightgreen" />,
+            variant: "good",
+        },
+        {
+            value: 1,
+            title: "Localisation sans arbre associé",
+            icon: <TbChristmasTreeOff className="text-xl md:text-2xl text-orange-600" />,
+            variant: "warning",
+        },
+        {
+            value: 3,
+            title: "Arbres sans une zone de plantation",
+            icon: <TbMapOff className="text-xl md:text-2xl text-red-600" />,
+            variant: "bad",
+        },
+    ];
+
     const { locations, pagination, loading, fetchData } = useLocations(10);
 
     const [showModal, setShowModal] = useState(false);
@@ -63,7 +92,9 @@ const Page = () => {
         <main className="min-h-screen mt-16 px-4 custom-size-minmax">
             <SecondaryNav />
 
-            <section>
+            <GlobalViewBoard title="Localisations" kpis={kpis} />
+
+            {/* <section>
 
                 <h1 className="font-extrabold text-brand-green text-4xl text-center mb-6">Vue d'ensemble des Localisations</h1>
 
@@ -121,7 +152,7 @@ const Page = () => {
                 </div>
 
 
-            </section>
+            </section> */}
 
             <section className="pb-10">
                 <div className="flex justify-between my-10">
@@ -258,7 +289,7 @@ const Page = () => {
                 onConfirm={confirmDelete}
                 onCancel={() => setShowModal(false)}
             />
-            
+
         </main>
     );
 };
