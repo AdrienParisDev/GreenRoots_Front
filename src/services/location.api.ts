@@ -3,7 +3,7 @@ import { apiFetch } from "./api";
 
 const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-// Avori les localisations avec de la pagination
+// Avoir les localisations avec de la pagination
 export async function fetchLocations(page: number, limit: number) {
     const res = await apiFetch(
         `/locations/pagination?page=${page}&limit=${limit}`,

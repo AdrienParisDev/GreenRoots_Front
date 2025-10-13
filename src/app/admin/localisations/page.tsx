@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LuListFilter } from "react-icons/lu";
 import { PiTreeFill, PiMagnifyingGlassBold } from "react-icons/pi";
 import { TbMapOff, TbChristmasTreeOff, TbMapPin2 } from "react-icons/tb";
 import { useLocations } from "@/hook/useLocations";
 import { deleteLocation, deleteProductLocationLink, getAllLocationsWithRelations } from "@/services/location.api";
+import { getLocationsKPI } from "@/services/dashboard.api"
 import { ILocation } from "@/types/index.types"
 import SecondaryNav from "@/components/Administrateur/nav/SecondaryNav";
 import AddButton from "@/components/Administrateur/button/Add";
@@ -15,35 +16,56 @@ import ActionDeleteButton from "@/components/Administrateur/button/ActionDelete"
 import ConfirmDeleteModal from "@/components/Administrateur/modal/ConfirmDelete";
 import GlobalViewBoard, { KPIData } from "@/components/Administrateur/board/GlobalView"
 
+
 const Page = () => {
 
-    // Informations pour hydrater le tableau de KPI
-    const kpis: KPIData[] = [
-        {
-            value: 42,
-            title: "Total des lieux de plantation",
-            icon: <PiTreeFill className="text-xl md:text-2xl text-brand-white" />,
-            variant: "star",
-        },
-        {
-            value: 38,
-            title: "Arbres ayant une zone de plantation",
-            icon: <TbMapPin2 className="text-xl md:text-2xl text-brand-lightgreen" />,
-            variant: "good",
-        },
-        {
-            value: 1,
-            title: "Localisation sans arbre associé",
-            icon: <TbChristmasTreeOff className="text-xl md:text-2xl text-orange-600" />,
-            variant: "warning",
-        },
-        {
-            value: 3,
-            title: "Arbres sans une zone de plantation",
-            icon: <TbMapOff className="text-xl md:text-2xl text-red-600" />,
-            variant: "bad",
-        },
-    ];
+    // Tableau de KPI
+    const [kpis, setKpis] = useState<KPIData[]>([]);
+    const GetKPI = async () => {
+        try {
+            const locKPIData = await getLocationsKPI();
+
+            // Vérification du format
+            if (!locKPIData) return;
+
+            // Hydratation du tableau KPI avec les valeurs dynamiques
+            const dynamicKpis: KPIData[] = [
+                {
+                    value: locKPIData.total_locations,
+                    title: "Total des lieux de plantation",
+                    icon: <PiTreeFill className="text-xl md:text-2xl text-brand-white" />,
+                    variant: "star",
+                },
+                {
+                    value: locKPIData.products_with_location,
+                    title: "Arbres ayant une zone de plantation",
+                    icon: <TbMapPin2 className="text-xl md:text-2xl text-brand-lightgreen" />,
+                    variant: "good",
+                },
+                {
+                    value: locKPIData.locations_without_product,
+                    title: "Localisation sans arbre associé",
+                    icon: <TbChristmasTreeOff className="text-xl md:text-2xl text-orange-600" />,
+                    variant: "warning",
+                },
+                {
+                    value: locKPIData.products_without_location,
+                    title: "Arbres sans une zone de plantation",
+                    icon: <TbMapOff className="text-xl md:text-2xl text-red-600" />,
+                    variant: "bad",
+                },
+            ];
+
+            setKpis(dynamicKpis);
+        } catch (error) {
+            console.error("Erreur lors du chargement des KPI :", error);
+        }
+    }
+
+    // Charger les KPI au montage de la page
+    useEffect(() => {
+        GetKPI();
+    }, []);
 
     const { locations, pagination, loading, fetchData } = useLocations(10);
 
@@ -93,66 +115,6 @@ const Page = () => {
             <SecondaryNav />
 
             <GlobalViewBoard title="Localisations" kpis={kpis} />
-
-            {/* <section>
-
-                <h1 className="font-extrabold text-brand-green text-4xl text-center mb-6">Vue d'ensemble des Localisations</h1>
-
-                <div className="flex justify-center items-between gap-8">
-                    <div className="mt-10 h-53 w-80 bg-brand-white rounded-xl p-6 border border-brand-lightgreen/30 shadow-sm text-center">
-                        <p className="font-extrabold text-brand-green text-4xl mb-3">
-                            42
-                        </p>
-                        <h3 className="text-base font-semibold text-brand-darkgreen mb-2">
-                            Total des lieux de plantation
-                        </h3>
-                        <div className="bg-brand-lightgreen/10 rounded-full w-12 h-12 md:w-16 md:h-16 flex items-center justify-center mx-auto mb-3 md:mb-4">
-                            <PiTreeFill className="text-xl md:text-2xl text-brand-darkgreen" />
-                        </div>
-                    </div>
-
-                    <div>
-                        <h2 className="font-extrabold text-brand-green text-2xl text-center mb-2">Etat des lieux de plantations</h2>
-                        <div className="flex gap-4">
-                            <div className="w-60  bg-brand-white rounded-xl md:rounded-2xl p-4 md:p-6 border border-brand-lightgreen/30 shadow-sm text-center">
-                                <p className="font-extrabold text-brand-green text-4xl mb-3">
-                                    38
-                                </p>
-                                <h3 className="text-base font-semibold text-brand-darkgreen mb-2">
-                                    Arbres ayant une zone de plantation
-                                </h3>
-                                <div className="bg-brand-lightgreen/10 rounded-full w-12 h-12 md:w-16 md:h-16 flex items-center justify-center mx-auto mb-3 md:mb-4">
-                                    <TbMapPin2 className="text-xl md:text-2xl text-brand-lightgreen" />
-                                </div>
-                            </div>
-                            <div className="w-60 bg-orange-300/10 rounded-xl md:rounded-2xl p-4 md:p-6 border border-orange-300 shadow-sm text-center">
-                                <p className="font-extrabold text-orange-400 text-4xl mb-3">
-                                    1
-                                </p>
-                                <h3 className="text-base font-semibold text-orange-600 mb-2">
-                                    Localisation sans arbre associé
-                                </h3>
-                                <div className="bg-orange-600/10 rounded-full w-12 h-12 md:w-16 md:h-16 flex items-center justify-center mx-auto mb-3 md:mb-4">
-                                    <TbChristmasTreeOff className="text-xl md:text-2xl text-orange-600" />
-                                </div>
-                            </div>
-                            <div className="w-60 bg-red-300/10 rounded-xl md:rounded-2xl p-4 md:p-6 border border-red-300 shadow-sm text-center">
-                                <p className="font-extrabold text-red-400 text-4xl mb-3">
-                                    3
-                                </p>
-                                <h3 className="text-base font-semibold text-red-600 mb-2">
-                                    Arbres sans une zone de plantation
-                                </h3>
-                                <div className="bg-red-600/10 rounded-full w-12 h-12 md:w-16 md:h-16 flex items-center justify-center mx-auto mb-3 md:mb-4">
-                                    <TbMapOff className="text-xl md:text-2xl text-red-600" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-            </section> */}
 
             <section className="pb-10">
                 <div className="flex justify-between my-10">
