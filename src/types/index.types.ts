@@ -56,3 +56,21 @@ export interface IUser {
   updated_at: string;
   anonymized_at: string;
 }
+
+export interface IOrder {
+  id: number;
+  created_at: string;
+  user: {
+    id: number;
+    firstname: string;
+    lastname: string;
+  };
+  status: string;
+  total: number;
+  items: {
+    id: number;
+    product: IProduct | null;
+    quantity: number;
+    unit_price: number;
+  };
+}
