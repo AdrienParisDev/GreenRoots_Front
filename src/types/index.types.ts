@@ -48,9 +48,11 @@ export interface IUser {
   firstname: string;
   lastname: string;
   email: string;
+  email_validated: boolean;
   password: string;
   role: string;
   entity_name: string;
   created_at: string;
   updated_at: string;
+  anonymized_at: string;
 }
