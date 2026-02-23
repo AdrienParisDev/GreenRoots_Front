@@ -105,7 +105,7 @@ const Card = ({
                 </p>
                 <div className="flex justify-between">
                     <p className="font-bold text-2xl md:ml-6">{price} €</p>
-                    <button onClick={() => router.push(`/catalogue/${id}`)}>
+                    <button className="w-24 bg-brand-green hover:bg-brand-darkgreen text-white font-semibold py-2 rounded" onClick={() => router.push(`/catalogue/${id}`)}>
                         Découvrir
                     </button>
                 </div>
