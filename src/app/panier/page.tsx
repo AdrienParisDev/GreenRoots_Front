@@ -2,7 +2,7 @@
 
 import OrderValidation from "@/components/OrderValidation";
 import useCartStore from "@/store/CartStore";
-import Image from "next/image";
+// import Image from "next/image";
 import Link from "next/link";
 import { FaChevronLeft, FaTrash } from "react-icons/fa";
 
@@ -44,13 +44,13 @@ export default function PanierPage() {
                     className="flex items-center justify-between bg-white shadow-md rounded-lg p-4 mb-4"
                   >
                     <div className="flex items-center">
-                      <Image
+                      {/* <Image
                         src={`http://localhost:4000/${item.image_urls[0]}`}
                         alt={item.name}
                         width={80}
                         height={80}
                         className="rounded-md mr-4"
-                      />
+                      /> */}
                       <div>
                         <h2 className="text-lg font-bold text-brand-darkgreen">
                           {item.name}
